@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity2">
+
+    <EditText
+        android:id="@+id/inp1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:hint="请输入更改的美元汇率"
+        android:inputType="number|numberDecimal"
+        android:textColorLink="#E91E63" />
+
+    <EditText
+        android:id="@+id/inp2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:hint="请输入更改的欧元汇率"
+        android:inputType="number|numberDecimal"
+        android:textColorLink="#E91E63" />
+
+    <EditText
+        android:id="@+id/inp3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:hint="请输入更改的韩元汇率"
+        android:inputType="number|numberDecimal"
+        android:textColorLink="#E91E63" />
+
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="SAVE" />
+</LinearLayout>
