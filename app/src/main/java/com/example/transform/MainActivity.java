@@ -102,7 +102,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         EditText inp = findViewById(R.id.inp);
         String str = inp.getText()+"";
-        double num = Double.parseDouble(str);
+        double num;
+        if(str != null && str.length() != 0) {
+            num = Double.parseDouble(str);
+        }
+        else{
+            num = 0;
+        }
         if(item.getItemId()==R.id.Item1)
         {
             num = num *dollarRate;
