@@ -4,14 +4,10 @@
 
     <item
         android:id="@+id/Item1"
-        android:title="Dollar"
+        android:title="Setting"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/Item2"
-        android:title="Euro"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/Item3"
-        android:title="Won"
+        android:title="OpenList"
         app:showAsAction="ifRoom"/>
 </menu>

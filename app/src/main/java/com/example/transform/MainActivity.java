@@ -110,13 +110,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(item.getItemId()==R.id.Item2)
         {
-            num = num *euroRate;
-            inp.setText(num+"");
-        }
-        else if(item.getItemId()==R.id.Item3)
-        {
-            num = num *wonRate;
-            inp.setText(num+"");
+            Intent list = new Intent(this,RateListActivity.class);
+            startActivity(list);
         }
         return super.onOptionsItemSelected(item);
     }
