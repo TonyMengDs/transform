@@ -33,6 +33,9 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,Runnable{
 
@@ -42,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView show;
     Handler handler;
 
-    float dollarRate;
-    float euroRate;
-    float wonRate;
-
+    private float dollarRate;
+    private float euroRate;
+    private float wonRate;
+    private String updateDate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dollarRate = sharedPreferences.getFloat("dollar_rate",0.0f);
         euroRate = sharedPreferences.getFloat("euro_rate",0.0f);
         wonRate = sharedPreferences.getFloat("won_rate",0.0f);
+        updateDate = sharedPreferences.getString("update_date","");
+
+        //获取当前系统时间
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final String todayStr = sdf.format(today);
+
+        if(!todayStr.equals(updateDate)){
+            Thread t = new Thread(this);
+            t.start();
+        }
 
         Button btn1 = findViewById(R.id.btn1);
         btn1.setOnClickListener(this);
@@ -67,8 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn3 = findViewById(R.id.btn3);
         btn3.setOnClickListener(this);
 
-        Thread t = new Thread(this);
-        t.start();
 
         handler = new Handler() {
             @Override
@@ -82,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.i(TAG, "handleMessage:dollarRate:" + dollarRate );
                     Log.i(TAG, "handleMessage:euroRate:" + euroRate );
                     Log.i(TAG, "handleMessage:wonRate:" + wonRate );
+
+                    SharedPreferences sp = getSharedPreferences("myrate",Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putFloat("dollar_rate",  dollarRate);
+                    editor.putFloat("euro_rate",  euroRate);
+                    editor.putFloat("won_rate",  wonRate);
+                    editor.putString("update_date",todayStr);
+                    editor.apply();
 
                     Toast.makeText(MainActivity.this,"汇率已更新",Toast.LENGTH_SHORT).show();
                 }
@@ -116,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(item.getItemId()==R.id.Item2)
         {
-            Intent list = new Intent(this,RateListActivity.class);
+            Intent list = new Intent(this,ListItemActivity.class);
             startActivity(list);
         }
         return super.onOptionsItemSelected(item);
@@ -127,7 +147,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         EditText inp = findViewById(R.id.inp);
         String str = inp.getText()+"";
-        double num = Double.parseDouble(str);
+        double num;
+            if(str != null && str.length() != 0) {
+                num = Double.parseDouble(str);
+            }
+            else{
+                num = 0;
+            }
         switch (view.getId())
         {
             case R.id.btn1:
@@ -143,11 +169,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 inp.setText(num+"");
                 break;
             case R.id.btn4:
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, MainActivity2.class);
+                Intent intent = new Intent(this,MainActivity2.class);
+                intent.putExtra("dollar_rate_key",dollarRate);
+                intent.putExtra("euro_rate_key",euroRate);
+                intent.putExtra("won_rate_key",wonRate);
+                /*intent.setClass(MainActivity.this, MainActivity2.class);
                 Bundle bundle = new Bundle();
-                intent.putExtras(bundle);//将Bundle添加到Intent,也可以在Bundle中添加相应数据传递给下个页面,例如：bundle.putString("abc", "bbb");
-                startActivityForResult(intent, 0);
+                intent.putExtras(bundle);//将Bundle添加到Intent,也可以在Bundle中添加相应数据传递给下个页面,例如：bundle.putString("abc", "bbb");*/
+                startActivityForResult(intent, 1);
             default:
                 break;
         }

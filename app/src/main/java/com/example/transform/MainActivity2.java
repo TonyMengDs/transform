@@ -11,13 +11,26 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 
 public class MainActivity2 extends MainActivity{
+
+    EditText dollarText;
+    EditText euroText;
+    EditText wonText;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Intent intent = getIntent();
-        float dollar2 = (float) intent.getDoubleExtra("dollar_rate_key",0.0f);
-        float euro2 = (float) intent.getDoubleExtra("euro_rate_key",0.0f);
-        float won2 = (float) intent.getDoubleExtra("won_rate_key",0.0f);
+        float dollar2 = intent.getFloatExtra("dollar_rate_key",0.0f);
+        float euro2 = intent.getFloatExtra("euro_rate_key",0.0f);
+        float won2 = intent.getFloatExtra("won_rate_key",0.0f);
+
+        dollarText = (EditText)findViewById(R.id.inp1);
+        euroText = (EditText)findViewById(R.id.inp2);
+        wonText = (EditText)findViewById(R.id.inp3);
+
+        dollarText.setText(String.valueOf(dollar2));
+        euroText.setText(String.valueOf(euro2));
+        wonText.setText(String.valueOf(won2));
+
         Button btn5 = findViewById(R.id.btn5);
         btn5.setOnClickListener(this);
     }
@@ -48,8 +61,9 @@ public class MainActivity2 extends MainActivity{
         float dollar2 = (float) Double.parseDouble(str1);
         float euro2 = (float) Double.parseDouble(str2);
         float won2 = (float) Double.parseDouble(str3);
+
         Intent intent = this.getIntent();
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = new Bundle();
         bundle.putFloat("dollar_rate_key", dollar2);//添加要返回给页面1的数据
         bundle.putFloat("euro_rate_key", euro2);//添加要返回给页面1的数据
         bundle.putFloat("won_rate_key", won2);//添加要返回给页面1的数据
