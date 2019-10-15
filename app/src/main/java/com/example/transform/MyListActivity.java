@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -21,9 +24,9 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
-public class MyListActivity extends AppCompatActivity implements Runnable{
-    String[] data = {"wait..."};
-
+public class MyListActivity extends AppCompatActivity implements Runnable, AdapterView.OnItemClickListener {
+    List<String> data = new ArrayList<String>();
+    ArrayAdapter adapter;
     Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +35,14 @@ public class MyListActivity extends AppCompatActivity implements Runnable{
 
         final ListView listView = findViewById(R.id.mylist);
 
-        List<String> list1 = new ArrayList<String>();
+
         for(int i=1;i<100;i++){
-            list1.add("item" + i);
+            data.add("item" + i);
         }
-        ListAdapter adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
         listView.setAdapter(adapter);
+        listView.setEmptyView(findViewById(R.id.nodata));
+        listView.setOnItemClickListener(this);
 
         Thread t = new Thread(this);
         t.start();
@@ -54,6 +59,12 @@ public class MyListActivity extends AppCompatActivity implements Runnable{
                 super.handleMessage(msg);
             }
         };
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> listv, View view, int position, long id){
+        adapter.remove(listv.getItemAtPosition((position)));
+        //adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -91,4 +102,5 @@ public class MyListActivity extends AppCompatActivity implements Runnable{
         msg.obj = retList;
         handler.sendMessage(msg);
     }
+
 }
