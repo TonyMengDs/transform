@@ -36,6 +36,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,Runnable{
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView show;
     Handler handler;
+    EditText rmb;
 
     private float dollarRate;
     private float euroRate;
@@ -56,7 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         show = (TextView)findViewById(R.id.txt);
+        rmb = (EditText)findViewById(R.id.inp);
 
+        //获取SP里保存的数据
         SharedPreferences sharedPreferences = getSharedPreferences("myrate",Activity.MODE_PRIVATE);
         PreferenceManager.getDefaultSharedPreferences(this);
         dollarRate = sharedPreferences.getFloat("dollar_rate",0.0f);
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.i(TAG, "handleMessage:dollarRate:" + dollarRate );
                     Log.i(TAG, "handleMessage:euroRate:" + euroRate );
                     Log.i(TAG, "handleMessage:wonRate:" + wonRate );
+
 
                     SharedPreferences sp = getSharedPreferences("myrate",Activity.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
@@ -136,8 +141,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(item.getItemId()==R.id.Item2)
         {
-            Intent list = new Intent(this,ListItemActivity.class);
+            //打开列表窗口
+            Intent list = new Intent(this,RateListActivity.class);
             startActivity(list);
+            //测试数据库
+            //RateItem item1 = new RateItem("aaaa","123");
+            //RateManager manager = new RateManager(this);
+            //manager.add(item1);
+            //manager.add(new RateItem("bbbb","23.5"));
+            //Log.i(TAG,"onOptionsItemSelected:写入数据完毕");
+
+            //查询所有数据
+            //List<RateItem> testList = manager.listAll();
+            //for(RateItem i : testList)
+            //{
+            //   Log.i(TAG,"onOptionsItemSelected:取出数据[id="+i.getId()+"]Name="+ i.getCurName() + "Rate=" + i.getCurRate());
+            //}
         }
         return super.onOptionsItemSelected(item);
     }
@@ -247,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i++;
         }*/
         Element table1 = tables.get(0);
-        Log.i(TAG,"run:table1" + table1);
+        //Log.i(TAG,"run:table1" + table1);
         Elements tds = table1.getElementsByTag("td");
         for(int i=0;i<tds.size();i+=6){
             Element td1 = tds.get(i);
