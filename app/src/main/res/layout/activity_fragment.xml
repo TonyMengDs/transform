@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FrameActivity">
+
+    <fragment
+        android:id="@+id/fragment_main"
+        android:name="com.example.transform.HomeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10" />
+
+    <fragment
+        android:id="@+id/fragment_func"
+        android:name="com.example.transform.FuncFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10" />
+
+    <fragment
+        android:id="@+id/fragment_setting"
+        android:name="com.example.transform.SettingFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10" />
+
+    <RadioGroup
+        android:id="@+id/bottomGroup"
+        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_height="0dp"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/radioHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rdo_home_label" />
+
+        <RadioGroup
+            android:id="@+id/radioFunc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rdo_func_label" />
+
+        <RadioGroup
+            android:id="@+id/radioSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rdo_setting_label" />
+    </RadioGroup>
+
+</LinearLayout>

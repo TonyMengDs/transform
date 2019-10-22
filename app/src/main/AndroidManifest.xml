@@ -12,13 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RateCalcActivity"
-            android:theme="@style/Base.Theme.AppCompat.Light.Dialog">
-        </activity>
-        <activity android:name=".ListItemActivity" />
-        <activity android:name=".MyListActivity" >
+        <activity android:name=".FrameActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".RateCalcActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light.Dialog"></activity>
+        <activity android:name=".ListItemActivity" />
+        <activity android:name=".MyListActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
